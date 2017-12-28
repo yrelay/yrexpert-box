@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+#!----------------------------------------------------------------------------!
+#!                                                                            !
+#! YRexpert : (Your Yrelay) Système Expert sous Mumps GT.M et GNU/Linux       !
+#! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
+#!                                                                            !
+#!----------------------------------------------------------------------------!
+
+# init script for YRexpert
+
+# Debian LSB info
+### BEGIN INIT INFO
+# Provides:          y-instanceyrexpert
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start YRexpert services at boot time
+# Description:       Starts/Stops YRexpert instances in a sane way.
+#                    Includes starting TaskMan.
+### END INIT INFO
+
+# Variables d'environnement
+# Ce chemin sera remplacé par le $basedir correspondant à l'instance YRexpert
+# qui sera créée. Ce script devra avoir codé "en dur"
+source /home/y-instance/config/env
+
+# Démarrer YRexpert
+start() {
+    # Si la base de données s'est arrêtée proprement, il ne devrait rien avoir dans les
+    # journaux, afin que nous puissions la suite sans souci
+    echo "Rendre une base de données cohérente (mupip recover -backward)"
+    su $instance -c "source $basedir/config/env && $gtm_dist/mupip journal -recover -backward $basedir/journals/YXP.mjl >> $basedir/log/recupererJournal.log 2>&1 && $basedir/scripts/activerJournal.sh"
+
+    # Réduire la base de données temporaire
+    su $instance -c "source $basedir/config/env && $gtm_dist/mupip rundown -region \"TEMP\" >> $basedir/log/reduireJournal.log"
+
+    # Start TaskMan
+    #- echo "Starting TaskMan"
+    #- su $instance -c "source $basedir/config/env && cd $basedir/tmp && $gtm_dist/mumps -run START^ZTMB"
+}
+stop() {
+    # Stop TaskMan
+    #- su $instance -c "source $basedir/config/env && mumps -run ^%XCMD 'S U=\"^\" D STOP^ZTMKU' << EOF
+#- Y
+#- Y
+#- Y
+#- EOF"
+    
+    # Wait for TaskMan to stop
+    #- echo "Waiting for TaskMan to stop (30 sec)"
+    #- sleep 30
+
+    # Recherchez le processus de M et y mettre fin
+    processes=$(pgrep mumps)
+    if [ ! -z "${processes}" ] ; then
+        echo "Arrêt des processus M restants"
+        for i in ${processes}
+        do
+            mupip stop ${i}
+        done
+
+        # Attendre l'arrêt du processus mupip
+        sleep 5
+    fi
+
+    # Rechercher les processus M qui sont encore en cours d'exécution
+    processes=$(pgrep mumps)
+    if [ ! -z "${processes}" ] ; then
+        #TODO: journalisation nécessaire ici
+        echo "Les processus M encore en cours sont fermés de force !"
+        pkill -9 mumps
+    fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        ;;
+esac

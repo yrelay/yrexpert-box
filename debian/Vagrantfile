@@ -1,0 +1,183 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # Toute la configuration Vagrant est fait ici. La configuration et les options
+  # les plus courantes sont documentés et commentés ci-dessous. Pour une
+  # information complète, voir la documentation en ligne sur vagrantup.com.
+
+  # Chaque environnement virtuel Vagrant nécessite une box.
+  # source : https://atlas.hashicorp.com/debian/
+  config.vm.box      = 'debian/jessie64'
+  config.vm.hostname = 'yrexpert-box'
+  # Chaque environnement virtuel Vagrant nécessite une box.
+  #config.vm.box = "Official Ubuntu 12.04 current daily Cloud Image amd64"
+  #config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  #config.vm.box = "Ubuntu Server 15.04 (Vivid Vervet) daily builds Image i386"
+  #config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/vivid/current/vivid-server-cloudimg-i386-vagrant-disk1.box"
+
+  # Pour activer l'interface graphique
+  # config.vm.provider "virtualbox" do |vb|
+  #   vb.gui = true
+  # end
+
+  # L'URL est l'endroit où la box 'config.vm.box' sera récupéré si elle
+  # n'existe pas : indiquez le nouveau chemin.
+  # config.vm.box_url = "http://domain.com/path/to/above.box"
+
+  # Créer un mappage de port externe qui permet l'accès à un port interne
+  # spécifiquede la machine à partir d'un port sur la machine hôte.
+  # Dans l'exemple ci-dessous, ceux accédant à "localhost: 8080" accéderont
+  # au port 80 sur la machine hôte.config.vm.network :
+  # forwarded_port, guest: 8080, host: 80 # Exemple
+  ##config.vm.network :forwarded_port, guest: 3000, host: 3000 # Libre pour test
+  ##config.vm.network :forwarded_port, guest: 8000, host: 8000 # EWDRest
+  config.vm.network :forwarded_port, guest: 8080, host: 8080 # yrexpert-js
+  config.vm.network :forwarded_port, guest: 8081, host: 8081 # yrexpert-term
+  config.vm.network :forwarded_port, guest: 8082, host: 8082 # yrexpert-rpc
+  config.vm.network :forwarded_port, guest: 8083, host: 8083 # Libre pour test
+  ##config.vm.network :forwarded_port, guest: 8089, host: 8089 # Node Inspector
+
+  # Créer un réseau privé, qui permet l'accès de l'hôte uniquement à la machine
+  # en utilisant une adresse IP spécifique.
+  # config.vm.network :private_network, ip: "192.168.0.22"
+
+  # Créer un réseau public, qui généralement adaptée au pont réseau.
+  # Les ponts réseaux rendent la machine apparante comme un autre périphérique
+  # physique sur votre réseau.
+  # config.vm.network :public_network
+
+  # Partager un dossier supplémentaire à l'invite de la VM. Le premier argument
+  # est le chemin sur l'hôte pour le dossier réel. Le deuxième argument est
+  # le chemin sur la VM pour monter le dossier. Et la troisième option
+  # l'argument est un ensemble d'options non-nécessaires.
+  config.vm.synced_folder "../", "/vagrant"
+
+  # Définir le nom de la box primaire pour tous les VM,
+  # plusieurs de machines virtuelles peuvent être ajoutées ici pour construire
+  # une box à plusieurs installeur.
+  config.vm.define "Box YRexpert Debian", primary: true do |yrexpert|
+  end
+
+  # Configuration Amazon EC2
+  # config.vm.provider :aws do |aws, override|
+  #   aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
+  #   aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
+  #   aws.keypair_name = ENV['AWS_KEYPAIR_NAME']
+  #   aws.ami = "ami-d9a98cb0"
+  #   aws.instance_type = "t1.micro"
+  #   override.vm.box = "dummy"
+  #   override.ssh.username = "ubuntu"
+  #   override.ssh.private_key_path = ENV['AWS_PRIVATE_KEY']
+  # end
+
+  # Configuration Rackspace Cloud
+  # config.vm.provider :rackspace do |rs, override|
+  #   rs.username = ENV['RS_USERNAME']
+  #   rs.api_key = ENV['RS_API_KEY']
+  #   rs.flavor = /512MB/
+  #   rs.image = /Ubuntu 12.04/
+  #   rs.rackspace_region = :ord
+  #   rs.public_key_path = ENV['RS_PUBLIC_KEY']
+  #   override.ssh.private_key_path = ENV['RS_PRIVATE_KEY']
+  # end
+
+  # Configuration spécifique au fournisseur de sorte que vous pouvez affiner
+  # selon les divers fournisseurs pour Vagrant. Car ils ont besoins d'options
+  # spécifiques. Exemple de VirtualBox :
+  #
+  # config.vm.provider :virtualbox do |vb|
+  #   # Ne pas démarrer en mode sans tête
+  #   vb.gui = true
+  #
+  #   # Utilisation de VBoxManage pour personnaliser la machine virtuelle.
+  #   # Par exemple, pour changer la mémoire:
+  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
+  # fin
+  #
+  # Voir la documentation pour le fournisseur que vous utilisez pour plus
+  # d'informations sur les options disponibles.
+
+  # La box Debian ne comprend pas de gestionnaire de configuration
+  # (provisioners). Vous pouvez les installer au démarrage en ajoutant :
+  # * puppet
+  # config.vm.provision "shell", inline: "apt-get install --yes puppet"
+  # * Ansible n'a pas besoin de client, mais a besoin de python-apt
+  #   pour installer des packages
+  # config.vm.provision "shell", inline: "apt-get install --yes python-apt"
+
+  # Activer le gestionnaire de configuration puppet pour orchestrer
+  # les déploiements. Les instructions (manifests) de ce gestionnaire se trouve
+  # dans un répertoire dont le chemin est défini par rapport à ce fichier
+  # Vagrantfile. Vous devrez créer ce répertoire pour et ces instructions dans
+  # le fichier manifest_file qui se situe dans le répertoire de manifests_path.
+  #
+  # Un exemple d'instruction pour afficher, le message du jour:
+  #
+  # # group { "puppet":
+  # #   ensure => "present",
+  # # }
+  # #
+  # # File { owner => 0, group => 0, mode => 0644 }
+  # #
+  # # file { '/etc/motd':
+  # #   content => "Bienvenue sur votre machine virtuelle Vagrant !
+  # #               Créer par Puppet.\n"
+  # # }
+  #
+  # config.vm.provision :puppet do |puppet|
+  #   puppet.manifests_path = "manifests"
+  #   puppet.manifest_file  = "init.pp"
+  # end
+  #
+
+  # Activer le gestionnaire de configuration chef-solo, en spécifiant
+  # (en relatif à Vagrant) un chemin pour les instructions (cookbooks),
+  # un chemin pour les rôles, et un chemin pour les données (data_bags),
+  # et en ajoutant quelques recettes (recipe) et/ou des rôles.
+  #
+  # config.vm.provision :chef_solo do |chef|
+  #   chef.cookbooks_path = "../my-recipes/cookbooks"
+  #   chef.roles_path = "../my-recipes/roles"
+  #   chef.data_bags_path = "../my-recipes/data_bags"
+  #   chef.add_recipe "mysql"
+  #   chef.add_role "web"
+  #
+  #   # Vous pouvez également spécifier les attributs pour JSON attributes:
+  #   chef.json = { :mysql_password => "foo" }
+  # end
+
+  # Activer le serveur de configuration chef, en indiquant l'URL du serveur
+  # chef, et le chemin d'accès à la clé de validation (en relatif par rapport
+  # à Vagrant).
+  #
+  # La plate-forme Opscode utilise le protocole HTTPS. Remplacez ORGNAME par
+  # le nom de votre organisation dans la clé de l'URL et de validation.
+  #
+  # Si vous avez votre propre chef cuisinier Server, utilisez l'URL appropriée,
+  # Qui peut être HTTP au lieu de HTTPS en fonction de votre configuration.
+  # Modifier seulement la validation de la clé validator.pem
+  #
+  # config.vm.provision :chef_client do |chef|
+  #   chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
+  #   chef.validation_key_path = "ORGNAME-validator.pem"
+  # end
+  #
+  # Si vous utilisez la plate-forme Opscode, corriger le client validateur
+  # ORGNAME-validator, en remplaçant ORGNAME avec le nom de votre organisation.
+  #
+  # Si vous avez votre propre serveur chef, le nom du client validateur par
+  # défaut est chef-validator, à moins que vous ayez changé la configuration.
+  #
+  #   chef.validator_client_name = "ORGNAME-validator"
+  #
+  config.vm.provision :shell do |s|
+    s.path = "installerAuto.sh"
+    s.args = "-e -i " + "#{ENV['instance']}"
+  end
+end
+
+
+
+

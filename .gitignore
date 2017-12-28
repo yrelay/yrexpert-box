@@ -1,0 +1,21 @@
+# Ne pas ajouter de dossiers de vagrant générée
+.vagrant/
+
+# Ne pas ajouter des scripts key générés
+EC2.sh
+Rackspace.sh
+
+# Ignorer la version en développement
+testing/
+
+# Ignorer la version instable
+unstable/
+
+# Ignorer les logs
+log/
+*.log
+
+
+
+
+

@@ -1,0 +1,5 @@
+# forcer les scripts shell pour avoir des fins de ligne UNIX
+*.sh text eol=lf
+yrexpert-js/config/init.d/yrexpert-js text eol=lf
+gtm/config/init.d/yrexpert text eol=lf
+
