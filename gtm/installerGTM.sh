@@ -43,7 +43,7 @@ fi
 
 # Un seul version GT.M trouvée
 gtm_dist=/usr/lib/${gtm_arch}-linux-gnu/fis-gtm/$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm)
-gtmver=$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm)
+gtm_ver=$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm)
 
 # Lier la bibliothèque partagée GT.M  et rafraîchir la mémoire cache
 if [[ $rhel || -z $debian ]]; then

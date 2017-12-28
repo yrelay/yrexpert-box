@@ -17,6 +17,7 @@ apt-get -y -qq update > /dev/null
 apt-get -y -qq upgrade > /dev/null
 
 # Installer les paquets de base
-apt-get install -y -qq git xinetd perl wget curl python ssh mysql-server openjdk-7-jdk maven sshpass > /dev/null
+#apt-get install -y -qq git xinetd perl wget curl python ssh mysql-server openjdk-7-jdk maven sshpass > /dev/null
+apt-get install -y -qq git xinetd perl wget curl python ssh mysql-server maven sshpass > /dev/null
 
 
