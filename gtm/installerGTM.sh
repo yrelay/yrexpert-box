@@ -22,7 +22,7 @@ apt-get install -y fis-gtm
 
 # Déterminer l'architecture du processeur - utilisé pour déterminer si nous pouvons utiliser GT.M
 arch=$(uname -m | tr -d _)
-if [ $arch == "x8664" ]; then
+if [ $arch = "x8664" ]; then
     gtm_arch="x86_64"
 else
     gtm_arch="i386"
