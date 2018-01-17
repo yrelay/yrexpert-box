@@ -156,12 +156,16 @@ su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nv
 
 # Installer en mode global
 echo "1/5 browserify" # http://doc.progysm.com/doc/browserify
+###npm install --quiet -g browserify >> $basedir/log/installerBrowserify.log && chown $instance:$instance $basedir/log/installerBrowserify.log
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g browserify >> $basedir/log/installerBrowserify.log"
 echo "2/5 uglify-js"
+###npm install --quiet -g uglify-js >> $basedir/log/installerUglify-js.log && chown $instance:$instance $basedir/log/installerUglify-js.log
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g uglify-js >> $basedir/log/installerUglify-js.log"
 echo "3/5 marked"
+###npm install --quiet -g marked@0.3.6 >> $basedir/log/installerMarked.log && chown $instance:$instance $basedir/log/installerMarked.log
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g marked@0.3.6 >> $basedir/log/installerMarked.log"
 echo "4/5 react-tools"
+###npm install --quiet -g react-tools@0.13.3 >> $basedir/log/installerReact-tools.log && chown $instance:$instance $basedir/log/installerReact-tools.log
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g react-tools@0.13.3 >> $basedir/log/installerReact-tools.log"
 # Installer le module yrexpert-js
 echo "5/5 yrexpert-js"
