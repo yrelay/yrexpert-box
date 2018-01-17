@@ -241,7 +241,7 @@ Les fichiers log pour ${instance}yrexpert et ${instance}yrexpert-js sont localis
 * yrexpertrpcOut.log
 * yrexpertrpcErr.log
 
-Pour accéder à l'administration du serveur EWD.js tapez dans l'URL de votre navigateur le lien suivant : **https://localhost:8080/yrexpert/index.html**
+Pour accéder à l'administration du serveur EWD.js tapez dans l'URL de votre navigateur le lien suivant : **http://localhost:8080/yrexpert/index.html**
 
 ## 13. Détails techniques
 
