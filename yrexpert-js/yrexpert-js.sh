@@ -48,13 +48,13 @@ if [ -s $basedir/.profile ]; then
     echo "" >> $basedir/.profile
     echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.profile
     echo "nvm use $nodever" >> $basedir/.profile
-    echo "export PATH=`npm config get prefix`/bin:$PATH" >> $basedir/.profile
+    source $basedir/.nvm/nvm.sh && nvm use $nodever echo "export PATH=`npm config get prefix`/bin:$PATH" >> $basedir/.profile
 fi
 
 if [ -s $basedir/.bash_profile ]; then
     echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.bash_profile
     echo "nvm use $nodever" >> $basedir/.bash_profile
-    echo "export PATH=`npm config get prefix`/bin:$PATH" >> $basedir/.bash_profile
+    source $basedir/.nvm/nvm.sh && nvm use $nodever echo "export PATH=`npm config get prefix`/bin:$PATH" >> $basedir/.bash_profile
 fi
 
 # Créer les répertoires pour node
