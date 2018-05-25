@@ -52,6 +52,7 @@ if [ -s $basedir/.profile ]; then
 fi
 
 if [ -s $basedir/.bash_profile ]; then
+    echo "" >> $basedir/.bash_profile
     echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.bash_profile
     echo "nvm use $nodever" >> $basedir/.bash_profile
     source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:\$PATH" >> $basedir/.bash_profile

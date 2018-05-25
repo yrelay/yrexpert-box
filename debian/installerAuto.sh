@@ -343,14 +343,15 @@ su $instance -c "source $basedir/partitions/${partitionUtil,,}/config/env && $re
 # Ajouter les outils de développement
 # Axiom - Developer tools for editing M[UMPS]/GT.M routines in Vim
 ##if $devInstallation; then
-    apt-get install vim -y
-    cd $basedir/src
-    git clone https://github.com/dlwicksell/axiom.git
-    cd axiom
-    su $instance -c "source $basedir/config/env && ./install -q"
-    # Retourner à $basedir
-    cd $basedir
+#    apt-get install vim -y
+#    cd $basedir/src
+#    git clone https://github.com/dlwicksell/axiom.git
+#    cd axiom
+#    su $instance -c "source $basedir/config/env && ./install -q"
+#    # Retourner à $basedir
+#    cd $basedir
 ##fi
+# Si Axiom est installer, il faut gérer les conséquences de la création de .bash_profile 
 
 # Post-installation
 if $postInstallation; then
