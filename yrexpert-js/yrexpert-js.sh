@@ -48,13 +48,13 @@ if [ -s $basedir/.profile ]; then
     echo "" >> $basedir/.profile
     echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.profile
     echo "nvm use $nodever" >> $basedir/.profile
-    source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:$PATH" >> $basedir/.profile
+    source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:\$PATH" >> $basedir/.profile
 fi
 
 if [ -s $basedir/.bash_profile ]; then
     echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.bash_profile
     echo "nvm use $nodever" >> $basedir/.bash_profile
-    source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:$PATH" >> $basedir/.bash_profile
+    source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:\$PATH" >> $basedir/.bash_profile
 fi
 
 # Créer les répertoires pour node
@@ -180,7 +180,7 @@ ln -s /usr/bin/nodejs /usr/bin/node
 echo "Créer le fichier bundle.js requis par l'application"
 su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js && rm -rf build && mkdir build"
 #su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js/src/js && browserify -t [ babelify --compact false --presets [es2015 react stage-2] ] App.js | uglifyjs > ../../build/bundle.js"
-su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js/src/js && browserify -t [ babelify --compact false --presets [es2015 react stage-3] ] App.js | uglifyjs > ../../build/bundle.js"
+su - $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js/src/js && browserify -t [ babelify --compact false --presets [es2015 react stage-3] ] App.js | uglifyjs > ../../build/bundle.js"
 
 su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js && cp -f src/index.html build/index.html"
 su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js && cp -f src/css/json-inspector.css build/json-inspector.css"
