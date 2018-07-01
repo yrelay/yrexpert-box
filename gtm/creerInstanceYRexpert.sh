@@ -17,7 +17,8 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Si chkconfig n'est pas installé
-apt-get install chkconfig
+# TODO: à modifier
+#apt-get install chkconfig
 
 # Options
 # Utilisation http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
@@ -64,25 +65,24 @@ else
 fi
 
 # Créer la configuration par défaut de la base de données standard
-##cd /usr/lib/${gtm_arch}-linux-gnu/fis-gtm
-dirs=( $(find /usr/lib/${gtm_arch}-linux-gnu/fis-gtm -maxdepth 1 -type d -printf '%P\n') )
+dirs=$(find /usr/lib/fis-gtm -maxdepth 1 -type d -printf '%P\n')
 
 # Rechercher GT.M:
 # Utiliser le chemin /usr/lib/{gtm_arch}-linux-gnu/fis-gtm
 # nous pouvons lister les répertoires si > 1 erreur de répertoire
-# Par défaut GT.M est installé sur /usr/lib/{gtm_arch}-linux-gnu/fis-gtm/{gtm_ver}
+# Par défaut GT.M est installé sur /usr/lib/fis-gtm/{gtm_ver}
 # quand gtm_arch=(i386 | x86_64) pour linux
 
-gtm_dirs=$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
-if [ $gtm_dirs -gt 1 ]; then
-    echo "Plus d'une version de GT.M installé!"
-    echo "Impossible de déterminer quelle version de GT.M à utiliser"
-    exit 1
+gtm_dirs=$(ls -1 /usr/lib/fis-gtm | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
+if [ $gtm_dirs -gt 2 ]; then
+    echo "Plus d'une version de GT.M installé !"
+    echo "Impossible de déterminer quelle version de GT.M à utiliser !"
+    exit 2
 fi
 
 # Un seul version GT.M trouvée
-gtm_dist=/usr/lib/${gtm_arch}-linux-gnu/fis-gtm/$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm)
-gtmver=$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm)
+gtmver=$(ls -1 /usr/lib/fis-gtm | tail -1)
+gtm_dist=/usr/lib/fis-gtm/$gtmver
 
 # $basedir est le répertoire de base de l'instance
 # exemples d'installation possibles : /home/$instance, /opt/$instance, /var/db/$instance
@@ -140,6 +140,7 @@ if [[ $debian || -z $RHEL ]]; then
 fi
 
 if [[ $RHEL || -z $debian ]]; then
+    # TODO: à modifier
     chkconfig --add ${instance}yrexpert
 fi
 
@@ -148,7 +149,7 @@ su $instance -c "ln -s $gtm_dist $basedir/libraries/gtm"
 
 # Créer le profile de l'instance
 # Necessite les variables GT.M
-# TODO : Vérifier 'I \$\$JOBEXAM^ZU(\$ZPOSITION)'
+# TODO: Vérifier 'I \$\$JOBEXAM^ZU(\$ZPOSITION)'
 echo "export gtm_dist=$basedir/libraries/gtm"   >> $basedir/config/env
 echo "export gtm_log=$basedir/log"              >> $basedir/config/env
 echo "export gtm_tmp=$basedir/tmp"              >> $basedir/config/env
@@ -162,8 +163,8 @@ echo "export gtm_arch=$gtm_arch"                >> $basedir/config/env
 echo "export gtmver=$gtmver"                    >> $basedir/config/env
 echo "export instance=$instance"                >> $basedir/config/env
 
-export "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
-export "export gtm_chset=UTF-8"			>> $basedir/config/env
+echo "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
+echo "export gtm_chset=UTF-8"			>> $basedir/config/env
 
 # Mettre les droits corrects pour env
 chown $instance:$instance $basedir/config/env
