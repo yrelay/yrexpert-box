@@ -34,7 +34,7 @@ cd $basedir
 
 # Installer node.js en utilisant NVM (node version manager) - https://github.com/creationix/nvm
 echo "Télécharger et installer NVM"
-su $instance -c "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash"
+su $instance -c "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash"
 echo "Installation de NVM terminé"
 
 # Installer node $nodever
@@ -48,14 +48,16 @@ if [ -s $basedir/.profile ]; then
     echo "" >> $basedir/.profile
     echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.profile
     echo "nvm use $nodever" >> $basedir/.profile
-    source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:\$PATH" >> $basedir/.profile
+    ###source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:\$PATH" >> $basedir/.profile
+    echo "export PATH=\`npm config get prefix\`/bin:\$PATH" >> $basedir/.profile
 fi
 
 if [ -s $basedir/.bash_profile ]; then
     echo "" >> $basedir/.bash_profile
     echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.bash_profile
     echo "nvm use $nodever" >> $basedir/.bash_profile
-    source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:\$PATH" >> $basedir/.bash_profile
+    ###source $basedir/.nvm/nvm.sh && nvm use $nodever && echo "export PATH=`npm config get prefix`/bin:\$PATH" >> $basedir/.bash_profile
+    echo "export PATH=\`npm config get prefix\`/bin:\$PATH" >> $basedir/.bash_profile
 fi
 
 # Créer les répertoires pour node

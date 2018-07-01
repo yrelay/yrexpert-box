@@ -162,6 +162,9 @@ echo "export gtm_arch=$gtm_arch"                >> $basedir/config/env
 echo "export gtmver=$gtmver"                    >> $basedir/config/env
 echo "export instance=$instance"                >> $basedir/config/env
 
+export "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
+export "export gtm_chset=UTF-8"			>> $basedir/config/env
+
 # Mettre les droits corrects pour env
 chown $instance:$instance $basedir/config/env
 

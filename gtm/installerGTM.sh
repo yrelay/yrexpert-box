@@ -6,7 +6,7 @@
 #!                                                                            !
 #!----------------------------------------------------------------------------!
 
-# Installez GT.M en utilisant un script de gtminstall
+# Installez GT.M en utilisant un script
 # Cet utilitaire nécessite des privliges root
 
 # Assurez-vous que nous sommes en root
@@ -15,49 +15,53 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-echo "Création de $instance..."
+# Preparation
 
-# Installer GT.M
-apt-get install -y fis-gtm
+echo "Preparer l'environment"
 
-# Déterminer l'architecture du processeur - utilisé pour déterminer si nous pouvons utiliser GT.M
-arch=$(uname -m | tr -d _)
-if [ $arch = "x8664" ]; then
-    gtm_arch="x86_64"
-else
-    gtm_arch="i386"
+sudo apt-get update
+sudo apt-get install -y build-essential libssl-dev
+sudo apt-get install -y wget gzip openssh-server curl python-minimal libelf1
+
+# GT.M
+
+echo 'Installer GT.M'
+
+mkdir /tmp/gtm # Créer un répertoire temporaire pour le programme d'installation
+cd /tmp/gtm    # Se déplacer sur le répertoire temporaire
+wget https://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall #  Télécharger le programme d'installation GT.M
+chmod +x gtminstall # Rendre le fichier exécutable
+
+# définir variables
+gtmroot=/usr/lib/fis-gtm
+gtmcurrent=$gtmroot/current
+if [ -e "$gtmcurrent"] ; then
+  mv -v $gtmcurrent $gtmroot/previous_`date -u +%Y-%m-%d:%H:%M:%S`
+fi
+sudo mkdir -p $gtmcurrent # S'assurer que le répertoire existe pour les liens vers GT.M actuel
+sudo -E ./gtminstall --utf8 default --verbose --linkenv $gtmcurrent --linkexec $gtmcurrent # télécharger et installer GT.M, y compris UTF-8 mode
+
+echo 'Configurer GT.M'
+
+gtmprof=$gtmcurrent/gtmprofile
+gtmprofcmd="source $gtmprof"
+$gtmprofcmd
+tmpfile=`mktemp`
+if [ `grep -v "$gtmprofcmd" ~/.profile | grep $gtmroot >$tmpfile`] ; then
+  echo "Attention : références de commandes existantes $gtmroot dans ~/.profile peut interférer avec la configuration de l'environnement"
+  cat $tmpfile
 fi
 
-# Rechercher GT.M:
-# Utiliser le chemin /usr/lib/{gtm_arch}-linux-gnu/fis-gtm
-# nous pouvons lister les répertoires si > 1 erreur de répertoire
-# Par défaut GT.M est installé sur /usr/lib/{gtm_arch}-linux-gnu/fis-gtm/{gtm_ver}
-# quand gtm_arch=(i386 | x86_64) pour linux
+# TODO: Correctif temporaire pour s'assurer que l'invocation de gtmprofile est correctement ajoutée à .profile
+echo 'copier ' $gtmprofcmd ' vers profile...'
+echo $gtmprofcmd >> ~/.profile
+# TODO: fin de la réparation temporaire
 
-gtm_dirs=$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
-if [ $gtm_dirs -gt 1 ]; then
-    echo "Plus d'une version de GT.M installé!"
-    echo "Impossible de déterminer quelle version de GT.M à utiliser"
-    exit 1
-fi
+rm $tmpfile
+unset tmpfile gtmprofcmd gtmprof gtmcurrent gtmroot
 
-# Un seul version GT.M trouvée
-gtm_dist=/usr/lib/${gtm_arch}-linux-gnu/fis-gtm/$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm)
-gtm_ver=$(ls -1 /usr/lib/${gtm_arch}-linux-gnu/fis-gtm)
-
-# Lier la bibliothèque partagée GT.M  et rafraîchir la mémoire cache
-if [[ $rhel || -z $debian ]]; then
-    # TODO: Vérifier le chemin /usr/local/lib
-    echo "/usr/local/lib" >> /etc/ld.so.conf
-fi
-# TODO: A supprimer
-if [ -h /usr/lib/$gtm_arch-linux-gnu/libgtmshr.so ]; then
-    rm /usr/lib/$gtm_arch-linux-gnu/libgtmshr.so
-fi
-ln -s /usr/lib/$gtm_arch-linux-gnu/fis-gtm/$gtm_ver/libgtmshr.so /usr/lib/$gtm_arch-linux-gnu/libgtmshr.so
-ldconfig
-
-echo "Installation de GT.M terminée..."
-
+echo "GT.M a été installé et configuré, prêt à l'emploi"
+echo 'Entrez dans le shell GT.M en tapant la commande : gtm'
+echo 'Sortir en tapant la commande : H'
 
 
