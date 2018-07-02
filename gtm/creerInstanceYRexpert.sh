@@ -144,7 +144,7 @@ fi
 
 if [[ $RHEL || -z $debian ]]; then
     # TODO: à modifier
-    chkconfig --add ${instance}yrexpert
+    #chkconfig --add ${instance}yrexpert
 fi
 
 # Lien symbolique pour GT.M

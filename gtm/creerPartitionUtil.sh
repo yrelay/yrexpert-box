@@ -23,7 +23,7 @@ fi
 
 # Si chkconfig n'est pas installé
 # TODO: à modifier
-apt-get install chkconfig
+#apt-get install chkconfig
 
 # Options
 # Utilisation http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
