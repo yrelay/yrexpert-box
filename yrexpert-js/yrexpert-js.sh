@@ -268,7 +268,8 @@ if [[ $debian || -z $RHEL ]]; then
 fi
 
 if [[ $RHEL || -z $debian ]]; then
-    chkconfig --add ${instance}yrexpert-js
+    #TODO: à modifier
+    #chkconfig --add ${instance}yrexpert-js
 fi
 
 # Add firewall rules
