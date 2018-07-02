@@ -22,6 +22,7 @@ if [[ -z $instance && $gtmver && $gtm_dist ]]; then
 fi
 
 # Si chkconfig n'est pas installé
+# TODO: à modifier
 apt-get install chkconfig
 
 # Options

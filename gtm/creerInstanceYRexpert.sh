@@ -20,6 +20,9 @@ fi
 # TODO: à modifier
 #apt-get install chkconfig
 
+# Si icu-config n'est pas installé
+apt-get install libicu-dev -y
+
 # Options
 # Utilisation http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
 # Documentation à titre indicatif

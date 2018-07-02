@@ -16,6 +16,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Si chkconfig n'est pas installé
+# TODO: à modifier
 apt-get install chkconfig
 
 # Options
@@ -65,8 +66,9 @@ if [[ $debian || -z $RHEL ]]; then
 fi
 
 if [[ $RHEL || -z $debian ]]; then
-    chkconfig --del ${instance}yrexpert
-    chkconfig --del ${instance}yrexpert-js
+    #TODO: à modifer
+    #chkconfig --del ${instance}yrexpert
+    #chkconfig --del ${instance}yrexpert-js
 fi
 
 # Arrêter et supprimer les services
