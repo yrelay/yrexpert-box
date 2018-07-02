@@ -270,7 +270,7 @@ fi
 if [[ $RHEL || -z $debian ]]; then
     #TODO: à modifier
     #chkconfig --add ${instance}yrexpert-js
-
+    echo "voir TODO..."
 fi
 
 # Add firewall rules

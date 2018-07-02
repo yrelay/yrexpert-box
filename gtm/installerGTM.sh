@@ -27,8 +27,8 @@ sudo apt-get install -y wget gzip openssh-server curl python-minimal libelf1
 
 echo 'Installer GT.M'
 
-mkdir /tmp/gtm # Créer un répertoire temporaire pour le programme d'installation
-cd /tmp/gtm    # Se déplacer sur le répertoire temporaire
+mkdir /tmp/tmp # Créer un répertoire temporaire pour le programme d'installation
+cd /tmp/tmp    # Se déplacer sur le répertoire temporaire
 wget https://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall #  Télécharger le programme d'installation GT.M
 chmod +x gtminstall # Rendre le fichier exécutable
 
@@ -39,7 +39,7 @@ if [ -e "$gtmcurrent"] ; then
   mv -v $gtmcurrent $gtmroot/previous_`date -u +%Y-%m-%d:%H:%M:%S`
 fi
 sudo mkdir -p $gtmcurrent # S'assurer que le répertoire existe pour les liens vers GT.M actuel
-sudo -E ./gtminstall --utf8 default --verbose --linkenv $gtmcurrent --linkexec $gtmcurrent # télécharger et installer GT.M, y compris UTF-8 mode
+sudo -E ./gtminstall --overwrite-existing --utf8 default --verbose --linkenv $gtmcurrent --linkexec $gtmcurrent # télécharger et installer GT.M, y compris UTF-8 mode
 
 echo 'Configurer GT.M'
 
