@@ -21,7 +21,7 @@ fi
 #apt-get install chkconfig
 
 # Si icu-config n'est pas installé
-apt-get install libicu-dev -y
+apt-get install -y libicu-dev
 
 # Options
 # Utilisation http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
