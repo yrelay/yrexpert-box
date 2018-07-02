@@ -167,8 +167,8 @@ echo "export gtm_arch=$gtm_arch"                >> $basedir/config/env
 echo "export gtmver=$gtmver"                    >> $basedir/config/env
 echo "export instance=$instance"                >> $basedir/config/env
 
-echo "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
-echo "export gtm_chset=UTF-8"			>> $basedir/config/env
+#echo "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
+#echo "export gtm_chset=UTF-8"			>> $basedir/config/env
 
 # Mettre les droits corrects pour env
 chown $instance:$instance $basedir/config/env
@@ -206,6 +206,9 @@ echo "alias lke=\"\$gtm_dist/mumps -run LKE\""  >> $basedir/scripts/prog.sh
 echo "alias dse=\"\$gtm_dist/mumps -run DSE\""  >> $basedir/scripts/prog.sh
 echo "\$gtm_dist/mumps -dir"                    >> $basedir/scripts/prog.sh
 
+echo "export gtm_icu_version=`icu-config --version`"	  >> $basedir/scripts/prog.sh
+echo "export gtm_chset=UTF-8"			>> $basedir/scripts/prog.sh
+
 # Mettre les droits corrects pour prog.sh
 chown $instance:$instance $basedir/scripts/prog.sh
 chmod +x $basedir/scripts/prog.sh
@@ -218,6 +221,9 @@ echo "source $basedir/config/env"		>> $basedir/scripts/util.sh
 echo "export SHELL=/scripts/false"              >> $basedir/scripts/util.sh
 echo "export gtm_nocenable=true"                >> $basedir/scripts/util.sh
 echo "exec \$gtm_dist/mumps -run ^VSTART"       >> $basedir/scripts/util.sh
+
+echo "export gtm_icu_version=`icu-config --version`"	  >> $basedir/scripts/util.sh
+echo "export gtm_chset=UTF-8"			>> $basedir/scripts/util.sh
 
 # Mettre les droits corrects pour util.sh
 chown $instance:$instance $basedir/scripts/util.sh
