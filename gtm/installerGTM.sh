@@ -5,6 +5,7 @@
 #! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 #!                                                                            !
 #!----------------------------------------------------------------------------!
+echo 'installGTM.sh-------------------------------------------------------------------'
 
 # Installez GT.M en utilisant un script
 # Cet utilitaire nécessite des privliges root
@@ -27,7 +28,7 @@ sudo apt-get install -y wget gzip openssh-server curl python-minimal libelf1
 
 echo 'Installer GT.M'
 
-rm -rf /tmp/gtminstall # Si exite supprimer le répertoire temporaire
+rm -rf /tmp/gtminstall # Si existe supprimer le répertoire temporaire
 mkdir /tmp/gtminstall # Créer un répertoire temporaire pour le programme d'installation
 cd /tmp/gtminstall    # Se déplacer sur le répertoire temporaire
 wget https://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall #  Télécharger le programme d'installation GT.M
@@ -36,12 +37,12 @@ chmod +x gtminstall # Rendre le fichier exécutable
 # définir variables
 gtmroot=/usr/lib/fis-gtm
 gtmcurrent=$gtmroot/current
-if [ -e "$gtmcurrent"] ; then
-  mv -v $gtmcurrent $gtmroot/previous_`date -u +%Y-%m-%d:%H:%M:%S`
+if [ -d "$gtmcurrent"] ; then
+  sudo mv -v $gtmcurrent $gtmroot/previous_`date -u +%Y-%m-%d:%H:%M:%S`
 fi
 sudo mkdir -p $gtmcurrent # S'assurer que le répertoire existe pour les liens vers GT.M actuel
 #sudo -E ./gtminstall --overwrite-existing --utf8 default --verbose --linkenv $gtmcurrent --linkexec $gtmcurrent # télécharger et installer GT.M, y compris UTF-8 mode
-sudo -E ./gtminstall --overwrite-existing --verbose # télécharger et installer GT.M, y compris UTF-8 mode
+sudo -E ./gtminstall --overwrite-existing --utf8 default --verbose --linkenv $gtmcurrent --linkexec $gtmcurrent # télécharger et installer GT.M, y compris UTF-8 mode
 
 echo 'Configurer GT.M'
 
@@ -66,4 +67,5 @@ echo "GT.M a été installé et configuré, prêt à l'emploi"
 echo 'Entrez dans le shell GT.M en tapant la commande : gtm'
 echo 'Sortir en tapant la commande : H'
 
+echo 'installGTM.sh-------------------------------------------------------------------'
 
