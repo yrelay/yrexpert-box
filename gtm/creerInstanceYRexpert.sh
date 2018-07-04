@@ -154,7 +154,7 @@ su $instance -c "ln -s $gtm_dist $basedir/libraries/gtm"
 # Créer le profile de l'instance
 # Necessite les variables GT.M
 # TODO: Vérifier 'I \$\$JOBEXAM^ZU(\$ZPOSITION)'
-echo "export gtm_dist=$basedir/libraries/gtm"   >> $basedir/config/env
+echo "export gtm_dist=$basedir/libraries/gtm/utf8"   		>> $basedir/config/env
 echo "export gtm_log=$basedir/log"              >> $basedir/config/env
 echo "export gtm_tmp=$basedir/tmp"              >> $basedir/config/env
 echo "export gtm_prompt=\"YXP>\""     		>> $basedir/config/env
@@ -167,8 +167,9 @@ echo "export gtm_arch=$gtm_arch"                >> $basedir/config/env
 echo "export gtmver=$gtmver"                    >> $basedir/config/env
 echo "export instance=$instance"                >> $basedir/config/env
 
-#echo "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
-#echo "export gtm_chset=UTF-8"			>> $basedir/config/env
+echo "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
+echo "export gtm_chset=UTF-8"			>> $basedir/config/env
+echo "export LC_CTYPE=fr_FR.utf8"		>> $basedir/config/env
 
 # Mettre les droits corrects pour env
 chown $instance:$instance $basedir/config/env
