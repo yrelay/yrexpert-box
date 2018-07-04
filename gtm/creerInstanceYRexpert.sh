@@ -76,12 +76,12 @@ dirs=$(find /usr/lib/fis-gtm -maxdepth 1 -type d -printf '%P\n')
 # Par défaut GT.M est installé sur /usr/lib/fis-gtm/{gtm_ver}
 # quand gtm_arch=(i386 | x86_64) pour linux
 
-gtm_dirs=$(ls -1 /usr/lib/fis-gtm | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
-if [ $gtm_dirs -gt 2 ]; then
-    echo "Plus d'une version de GT.M installé !"
-    echo "Impossible de déterminer quelle version de GT.M à utiliser !"
-    exit 2
-fi
+#gtm_dirs=$(ls -1 /usr/lib/fis-gtm | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
+#if [ $gtm_dirs -gt 2 ]; then
+#    echo "Plus d'une version de GT.M installé !"
+#    echo "Impossible de déterminer quelle version de GT.M à utiliser !"
+#    exit 2
+#fi
 
 # Un seul version GT.M trouvée
 gtmver=$(ls -1 /usr/lib/fis-gtm | tail -1)
