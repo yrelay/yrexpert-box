@@ -59,8 +59,8 @@ if [ `grep -v "$gtmprofcmd" ~/.profile | grep $gtmroot >$tmpfile`] ; then
 fi
 
 # TODO: Correctif temporaire pour s'assurer que l'invocation de gtmprofile est correctement ajoutée à .profile
-echo 'copier ' $gtmprofcmd ' vers profile...'
-echo $gtmprofcmd >> ~/.profile
+##echo 'copier ' $gtmprofcmd ' vers profile...'
+##echo $gtmprofcmd >> ~/.profile
 # TODO: fin de la réparation temporaire
 
 rm $tmpfile

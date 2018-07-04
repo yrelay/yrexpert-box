@@ -149,12 +149,12 @@ if [[ $RHEL || -z $debian ]]; then
 fi
 
 # Lien symbolique pour GT.M
-su $instance -c "ln -s $gtm_dist $basedir/libraries/gtm"
+su $instance -c "ln -s $gtm_dist/utf8 $basedir/libraries/gtm"
 
 # Créer le profile de l'instance
 # Necessite les variables GT.M
 # TODO: Vérifier 'I \$\$JOBEXAM^ZU(\$ZPOSITION)'
-echo "export gtm_dist=$basedir/libraries/gtm/utf8"   		>> $basedir/config/env
+echo "export gtm_dist=$basedir/libraries/gtm"	>> $basedir/config/env
 echo "export gtm_log=$basedir/log"              >> $basedir/config/env
 echo "export gtm_tmp=$basedir/tmp"              >> $basedir/config/env
 echo "export gtm_prompt=\"YXP>\""     		>> $basedir/config/env
