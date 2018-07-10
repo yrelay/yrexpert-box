@@ -85,8 +85,8 @@ echo "export gtmver=$gtmver"                    >> $partdir/config/env
 echo "export instance=$instance"                >> $partdir/config/env
 echo "export partition=$partition"              >> $partdir/config/env
 
-echo "export gtm_icu_version=`icu-config --version`"		>> $partdir/config/env
-echo "export gtm_chset=UTF-8"			>> $partdir/config/env
+###echo "export gtm_icu_version=`icu-config --version`"		>> $partdir/config/env
+###echo "export gtm_chset=UTF-8"			>> $partdir/config/env
 #echo "export LC_CTYPE=fr_FR.utf8"		>> $basedir/config/env
 
 # Mettre les droits corrects pour env
