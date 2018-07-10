@@ -149,7 +149,8 @@ if [[ $RHEL || -z $debian ]]; then
 fi
 
 # Lien symbolique pour GT.M
-su $instance -c "ln -s $gtm_dist/utf8 $basedir/libraries/gtm"
+###su $instance -c "ln -s $gtm_dist/utf8 $basedir/libraries/gtm"
+su $instance -c "ln -s $gtm_dist $basedir/libraries/gtm"
 
 # Créer le profile de l'instance
 # Necessite les variables GT.M
