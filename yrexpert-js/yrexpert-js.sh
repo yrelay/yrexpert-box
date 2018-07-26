@@ -182,7 +182,6 @@ ln -s /usr/bin/nodejs /usr/bin/node
 
 echo "Créer le fichier bundle.js requis par l'application"
 su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js && rm -rf build && mkdir build"
-#su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js/src/js && browserify -t [ babelify --compact false --presets [es2015 react stage-2] ] App.js | uglifyjs > ../../build/bundle.js"
 su - $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js/src/js && browserify -t [ babelify --compact false --presets [es2015 react stage-3] ] App.js | uglifyjs > ../../build/bundle.js"
 
 su $instance -c "cd $basedir/nodejs/node_modules/yrexpert-js && cp -f src/index.html build/index.html"

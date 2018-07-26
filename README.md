@@ -39,7 +39,7 @@ Si vous êtes sur un système Linux type Debian, vous pouvez taper :
 
 Sinon, Vagrant peut être téléchargé à partir http://downloads.vagrantup.com/. Vous devez télécharger la version correcte de Vagrant en fonction de votre système d'exploitation.
 
-Yrelay a testé Vagrant 1.6.5, mais il n'y a aucune raison que les nouvelles versions ne fonctionnent pas.
+Yrelay a testé Vagrant 2.1.2, mais il n'y a aucune raison que les nouvelles versions ne fonctionnent pas.
 
 ### 4.2. VirtualBox
 
@@ -47,7 +47,11 @@ VirtualBox est un logiciel de virtualisation open source qui fonctionne avec Vag
 
 	~$ sudo apt-get install virtualbox
 
+Si Virtualbox n'est pas dans les dépôts de votre sources.list : voir les instructions sur https://wiki.debian.org/VirtualBox
+
 Sinon, VirtualBox peut être téléchargé à partir https://www.virtualbox.org/wiki/Downloads. L'installation est simple et vous pouvez prendre les valeurs par défaut durant le processus d'installation.
+
+Veiller à la compatibilité entre Vagrant et VirtualBox : https://www.vagrantup.com/docs/virtualbox/
 
 ### 4.3. Git
 
