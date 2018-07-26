@@ -7,13 +7,8 @@ Vagrant.configure("2") do |config|
   # les plus courantes sont documentés et commentés ci-dessous. Pour une
   # information complète, voir la documentation en ligne sur vagrantup.com.
 
-  # puppet - La box n'inclut pas les approvisionneurs.
-  config.vm.provision "shell", inline: "apt-get install --yes puppet"
-  # ansible n'a pas besoin d'un client, mais nécessite python-apt pour installer des paquets
-  config.vm.provision "shell", inline: "apt-get install --yes python-apt"
-
   # Chaque environnement virtuel Vagrant nécessite une box.
-  # source : https://app.vagrantup.com/debian
+  # source : https://atlas.hashicorp.com/debian/
   config.vm.box      = "debian/stretch64"
   config.vm.hostname = "yrexpert-box"
   # Chaque environnement virtuel Vagrant nécessite une box.
@@ -38,6 +33,7 @@ Vagrant.configure("2") do |config|
   # forwarded_port, guest: 8080, host: 80 # Exemple
   ##config.vm.network :forwarded_port, guest: 3000, host: 3000 # Libre pour test
   ##config.vm.network :forwarded_port, guest: 8000, host: 8000 # EWDRest
+  config.vm.network :forwarded_port, guest: 22, host: 2222 # ssh
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # yrexpert-js
   config.vm.network :forwarded_port, guest: 8081, host: 8081 # yrexpert-term
   config.vm.network :forwarded_port, guest: 8082, host: 8082 # yrexpert-rpc
@@ -64,6 +60,11 @@ Vagrant.configure("2") do |config|
   # une box à plusieurs installeur.
   config.vm.define "Box YRexpert Debian", primary: true do |yrexpert|
   end
+
+  # puppet - La box n'inclut pas les approvisionneurs.
+  config.vm.provision "shell", inline: "apt-get install --yes puppet"
+  # ansible does not need a client, but needs python-apt to install packages
+  config.vm.provision "shell", inline: "apt-get install --yes python-apt"
 
   # Configuration Amazon EC2
   # config.vm.provider :aws do |aws, override|

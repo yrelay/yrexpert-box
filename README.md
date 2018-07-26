@@ -256,7 +256,7 @@ L'essentiel se trouve dans deux fichiers :
 
 ### 13.1. Vagrantfile
 
-Le fichier Vagrantfile est ce qui indique à Vagrant quoi faire. Ce fichier contient la configuration pour la machine virtuelle de base qui sera créée, mais aussi où l'obtenir par exemple **debian/jessie64**. Le Vagrantfile contient également des informations sur l'outil de gestion (shell, chef, puppet, etc.) à utiliser, dans quel ordre, et où les fichiers sont. Actuellement, seul l'outil shell est utilisé.
+Le fichier Vagrantfile est ce qui indique à Vagrant quoi faire. Ce fichier contient la configuration pour la machine virtuelle de base qui sera créée, mais aussi où l'obtenir par exemple **debian/stretch64**. Le Vagrantfile contient également des informations sur l'outil de gestion (shell, chef, puppet, etc.) à utiliser, dans quel ordre, et où les fichiers sont. Actuellement, seul l'outil shell est utilisé.
 
 Pour plus d'informations sur Vagrantfiles lire la documentation Vagrant situé à **http://docs.vagrantup.com/v2/vagrantfile/index.html**.
 
