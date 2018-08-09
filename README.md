@@ -87,7 +87,7 @@ Vous pouvez voir une erreur durant l'install **"Could not find the X.Org or XFre
 
 ## 7. Démarrer le process
 
-Maintenant, puisque nous avons un clone du référentiel **yrexpert-box**, nous devons créer une nouvelle machine virtuelle utilisant Vagrant. Ce processus est automatisé et devrait prendre environ 20 minutes.
+Maintenant, puisque nous avons un clone du référentiel **yrexpert-box**, nous devons créer une nouvelle machine virtuelle utilisant Vagrant. Ce processus est automatisé et devrait prendre entre 15 minutes à 1 heure 30 minutes en fonction de ligne internet et des mises à jour nécessaires.
 
 Remarque : Si vous ne souhaitez pas installer les répertoires de développement par défaut (nécessaire pour la ré-exécuter des tests), vous devez modifier manuellement le **Vagrantfile** situé dans **~/yrelay/yrexpert-box/debian** et enlever le **-e** sur la ligne 155. Il devrait ressembler à : **s.args = "-i " + "#{ENV['instance']}"**
 

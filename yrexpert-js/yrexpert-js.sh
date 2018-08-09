@@ -162,8 +162,10 @@ su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nv
 # Installer en mode global
 echo "1/5 browserify" # http://doc.progysm.com/doc/browserify
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g browserify >> $basedir/log/installerBrowserify.log"
-echo "2/5 uglify-js"
-su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g uglify-js >> $basedir/log/installerUglify-js.log"
+#echo "2/5 uglify-js"
+#su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g uglify-js >> $basedir/log/installerUglify-js.log"
+echo "2/5 uglify-es"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g uglify-es >> $basedir/log/installerUglify-es.log"
 echo "3/5 marked"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g marked@0.3.6 >> $basedir/log/installerMarked.log"
 echo "4/5 react-tools"
