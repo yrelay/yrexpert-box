@@ -373,7 +373,10 @@ cd $repScript
 #    service ${instance}yrexpert-js restart
 #fi
 echo "Redémarrer les services ${instance}yrexpert et ${instance}yrexpert-js"
+echo "Et qu'ils soient lancés automatiquement au démarrage du système."
 systemctl daemon-reload
+systemctl enable ${instance}yrexpert
+systemctl enable ${instance}yrexpert-js
 service ${instance}yrexpert restart
 service ${instance}yrexpert-js restart
 
