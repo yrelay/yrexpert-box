@@ -366,11 +366,16 @@ cd $repScript
 
 # Relancer les services s'il s'agit d'une réinstallation.
 # TODO: à déplacer
-if $reInstall ; then
-    echo "Redémarrer les services ${instance}yrexpert et ${instance}yrexpert-js"
-    service ${instance}yrexpert restart
-    service ${instance}yrexpert-js restart
-fi
+#if $reInstall ; then
+#    echo "Redémarrer les services ${instance}yrexpert et ${instance}yrexpert-js"
+#    systemctl daemon-reload
+#    service ${instance}yrexpert restart
+#    service ${instance}yrexpert-js restart
+#fi
+echo "Redémarrer les services ${instance}yrexpert et ${instance}yrexpert-js"
+systemctl daemon-reload
+service ${instance}yrexpert restart
+service ${instance}yrexpert-js restart
 
 echo "Installation Auto terminée..."
 

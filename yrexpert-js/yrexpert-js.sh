@@ -160,20 +160,20 @@ su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nv
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm init -y >> $basedir/log/initNpm.log"
 
 # Installer en mode global
-echo "1/6 browserify" # http://doc.progysm.com/doc/browserify
+echo "1/5 browserify" # http://doc.progysm.com/doc/browserify
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g browserify >> $basedir/log/installerBrowserify.log"
 #echo "2/5 uglify-js"
 #su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g uglify-js >> $basedir/log/installerUglify-js.log"
-echo "2/6 uglify-es"
+echo "2/5 uglify-es"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g uglify-es >> $basedir/log/installerUglify-es.log"
-echo "3/6 marked"
-su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g marked@0.3.6 >> $basedir/log/installerMarked.log"
-echo "4/6 react-tools"
-su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g react-tools@0.13.3 >> $basedir/log/installerReact-tools.log"
-echo "5/6 react-tools"
+echo "3/5 marked"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g marked >> $basedir/log/installerMarked.log"
+#echo "4/6 react-tools"
+#su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g react-tools@0.13.3 >> $basedir/log/installerReact-tools.log"
+echo "4/5 react-devtools"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g react-devtools >> $basedir/log/installerReact-devtools.log"
 # Installer le module yrexpert-js
-echo "6/6 yrexpert-js"
+echo "5/5 yrexpert-js"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet --save-prod --save-dev yrexpert-js >> $basedir/log/installerYRexpert-js.log"
 
 # Certaines distributions linux installent nodejs non comme exécutable "node" mais comme "nodejs".
@@ -288,6 +288,7 @@ if [[ $RHEL || -z $debian ]]; then
 fi
 
 # Démarrer le service
+systemctl daemon-reload
 service ${instance}yrexpert-js start
 
 echo "Installation EWD.js terminée..."
