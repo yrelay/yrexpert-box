@@ -374,14 +374,12 @@ cd $repScript
 #fi
 echo "Redémarrer les services ${instance}yrexpert et ${instance}yrexpert-js"
 echo "Et qu'ils soient lancés automatiquement au démarrage du système."
-# Recharge systemd
-systemctl --system daemon-reload
 # Démarrer les services
 service ${instance}yrexpert restart
 service ${instance}yrexpert-js restart
 # Ajouter ces services au démarrage
-systemctl enable ${instance}yrexpert
-systemctl enable ${instance}yrexpert-js
+update-rc.d ${instance}yrexpert defaults
+update-rc.d ${instance}yrexpert-js defaults
 
 echo "Installation Auto terminée..."
 
