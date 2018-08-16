@@ -259,15 +259,16 @@ chown $instance:$instance $basedir/nodejs/node_modules/yrelay-config.js
 perl -pi -e 's#y-instance#'$instance'#g' $basedir/config/init.d/yrexpert-js
 
 # Créer le démarrage de service
-# TODO: A supprimer
-if [ -h /etc/init.d/${instance}yrexpert-js ]; then
+# TODO: Faire fonctionner avec un lien -h
+if [ -f /etc/init.d/${instance}yrexpert-js ]; then
     rm /etc/init.d/${instance}yrexpert-js
 fi
-ln -s $basedir/config/init.d/yrexpert-js /etc/init.d/${instance}yrexpert-js
+#ln -s $basedir/config/init.d/yrexpert-js /etc/init.d/${instance}yrexpert-js
+cp $basedir/config/init.d/yrexpert-js /etc/init.d/${instance}yrexpert-js
 
 # Installer le script init
 if [[ $debian || -z $RHEL ]]; then
-    update-rc.d ${instance}yrexpert-js defaults
+    update-rc.d ${instance}yrexpert-js defaults 85 15
 fi
 
 if [[ $RHEL || -z $debian ]]; then

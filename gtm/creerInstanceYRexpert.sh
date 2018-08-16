@@ -131,15 +131,16 @@ perl -pi -e 's/y-instance/'$instance'/g' $basedir/scripts/*.sh
 perl -pi -e 's/y-instance/'$instance'/g' $basedir/config/init.d/yrexpert
 
 # Créer le démmarrage du service
-# TODO: A supprimer
-if [ -h /etc/init.d/${instance}yrexpert ]; then
+# TODO: Faire fonctionner avec un lien -h
+if [ -f /etc/init.d/${instance}yrexpert ]; then
     rm /etc/init.d/${instance}yrexpert
 fi
-ln -s $basedir/config/init.d/yrexpert /etc/init.d/${instance}yrexpert
+#ln -s $basedir/config/init.d/yrexpert /etc/init.d/${instance}yrexpert
+cp $basedir/config/init.d/yrexpert /etc/init.d/${instance}yrexpert
 
 # Installer le script init
 if [[ $debian || -z $RHEL ]]; then
-    update-rc.d ${instance}yrexpert defaults
+    update-rc.d ${instance}yrexpert defaults 80 20
 fi
 
 if [[ $RHEL || -z $debian ]]; then

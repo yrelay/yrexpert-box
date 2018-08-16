@@ -364,24 +364,20 @@ chmod -R g+rw /home/$instance
 # Retourner à $repScript
 cd $repScript
 
-# Relancer les services s'il s'agit d'une réinstallation.
-# TODO: à déplacer
-#if $reInstall ; then
-#    echo "Redémarrer les services ${instance}yrexpert et ${instance}yrexpert-js"
-#    systemctl daemon-reload
-#    service ${instance}yrexpert restart
-#    service ${instance}yrexpert-js restart
-#fi
+# Relancer les services
+# TODO: à à optimiser pour ne relancer qu'une fois
 echo "Redémarrer les services ${instance}yrexpert et ${instance}yrexpert-js"
 echo "Et qu'ils soient lancés automatiquement au démarrage du système."
+systemctl daemon-reload
 # Démarrer les services
 service ${instance}yrexpert restart
 service ${instance}yrexpert-js restart
 # Ajouter ces services au démarrage
-update-rc.d ${instance}yrexpert defaults
-update-rc.d ${instance}yrexpert-js defaults
+update-rc.d ${instance}yrexpert defaults 80 20
+update-rc.d ${instance}yrexpert-js defaults 85 15
 
 echo "Installation Auto terminée..."
+
 
 
 
