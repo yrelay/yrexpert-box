@@ -41,7 +41,7 @@ usage()
     Ce script permet de créer automatiquement une instance YRexpert pour GT.M sur Debian
 
     DEFAULTS:
-      Dépôt yrexpert-box alternatif = https://github.com/yrelay/yrexpert-box.git
+      Dépôt yrexpert-box alternatif = https://github.com/yrelay/yrexpert-box-testing.git
       Dépôt yrexpert-m alternatif = https://github.com/yrelay/yrexpert-m.git
       Dépôt yrexpert-js alternatif = https://github.com/yrelay/yrexpert-js.git
       Dépôt de la partition utilisateur = https://github.com/yrelay/yrexpert-dmo.git
@@ -87,10 +87,12 @@ do
             ;;
         d)
             repertoireDev=true
+            devInstallation=true
             ;;
         e)
             installerJS=true
             repertoireDev=true
+            devInstallation=true
             ;;
         i)
             instance=$(echo $OPTARG |tr '[:upper:]' '[:lower:]')
@@ -215,8 +217,8 @@ if [ -d /vagrant ]; then
 
     # Convertir les fins de lignes
     find /vagrant -name \"*.sh\" -type f -print0 | xargs -0 dos2unix > /dev/null 2>&1
-    dos2unix /vagrant/ewd/config/init.d/ewdjs > /dev/null 2>&1
     dos2unix /vagrant/gtm/config/init.d/yrexpert > /dev/null 2>&1
+    dos2unix /vagrant/gtm/config/init.d/yrexpert-js > /dev/null 2>&1
 
 else
     # TODO: à commenter
@@ -301,27 +303,7 @@ if $repertoireDev; then
     perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/config/env
 fi
 
-# Installer yrexpert-js
-if $installerJS; then
-    cd $repScript/yrexpert-js
-    ./yrexpert-js.sh
-    cd $basedir
-fi
-
-# Construire un environnement nodejs pour yrexpert
-# L'environnement yrexpert-js sera cloner depuis les dépots yrexpert-js
-# Copier le réperotre /www/
-
-# Cloner le dépot yrexpert-js
-#***cd $basedir/src
-#***git clone $cheminDepotJS yrexpert-js
-
-# Retourner à $basedir
-#***cd $basedir
-
-# Effectuer l'importation de yrexpert-js
-#***su $instance -c "source $basedir/config/env && $repScript/gtm/importerYRexpert-js.sh"
-
+# Installer yrexpert-dmo--------------------------------------------------------
 # Construire un environnement pour la partition utilisateur (par défaut DMO)
 # L'environnement de la partition utilisateur sera cloner depuis le dépot $partitionUtil 
 # Créer la partititon utilisateur avec importerPartitionUtil.sh
@@ -339,19 +321,28 @@ cd $repScript
 
 # Effectuer l'importation de yrexpert-$partitionUtil
 su $instance -c "source $basedir/partitions/${partitionUtil,,}/config/env && $repScript/gtm/importerPartitionUtil.sh"
+#-------------------------------------------------------------------------------
 
-# Ajouter les outils de développement
+# Installer yrexpert-js---------------------------------------------------------
+if $installerJS; then
+    cd $repScript/yrexpert-js
+    ./yrexpert-js.sh
+    cd $basedir
+fi
+#-------------------------------------------------------------------------------
+
+# Ajouter les outils de développement-------------------------------------------
 # Axiom - Developer tools for editing M[UMPS]/GT.M routines in Vim
-##if $devInstallation; then
-#    apt-get install vim -y
-#    cd $basedir/src
-#    git clone https://github.com/dlwicksell/axiom.git
-#    cd axiom
-#    su $instance -c "source $basedir/config/env && ./install -q"
-#    # Retourner à $basedir
-#    cd $basedir
-##fi
-# Si Axiom est installer, il faut gérer les conséquences de la création de .bash_profile 
+if $devInstallation; then
+    apt-get install vim -y
+    cd $basedir/src
+    git clone https://github.com/dlwicksell/axiom.git
+    cd axiom
+    su $instance -c "source $basedir/config/env && ./install -q"
+    # Retourner à $basedir
+    cd $basedir
+fi
+#-------------------------------------------------------------------------------
 
 # Post-installation
 if $postInstallation; then
