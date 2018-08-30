@@ -333,15 +333,15 @@ fi
 
 # Ajouter les outils de développement-------------------------------------------
 # Axiom - Developer tools for editing M[UMPS]/GT.M routines in Vim
-if $devInstallation; then
-    apt-get install vim -y
-    cd $basedir/src
-    git clone https://github.com/dlwicksell/axiom.git
-    cd axiom
-    su $instance -c "source $basedir/config/env && ./install -q"
-    # Retourner à $basedir
-    cd $basedir
-fi
+##if $devInstallation; then
+##    apt-get install vim -y
+##    cd $basedir/src
+##    git clone https://github.com/dlwicksell/axiom.git
+##    cd axiom
+##    su $instance -c "source $basedir/config/env && ./install -q"
+##    # Retourner à $basedir
+##    cd $basedir
+##fi
 #-------------------------------------------------------------------------------
 
 # Post-installation
