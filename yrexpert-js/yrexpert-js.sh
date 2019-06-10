@@ -103,7 +103,7 @@ echo "4/6 jsdoc"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet -g jsdoc >> $basedir/log/installerJsdoc.log"
 
 # Installer les modules locaux
-echo "5/6 yrexpert-js-testing"
+echo "5/6 yrexpert-js"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet --save-prod yrexpert-js >> $basedir/log/installerYrexpert-js.log"
 echo "6/6 babelify@next"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && npm install --quiet --save-dev babelify@next >> $basedir/log/installerBabelify@next.log"
