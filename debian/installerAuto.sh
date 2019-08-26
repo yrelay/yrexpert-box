@@ -41,7 +41,7 @@ usage()
     Ce script permet de créer automatiquement une instance YRexpert pour GT.M sur Debian
 
     DEFAULTS:
-      Dépôt yrexpert-box alternatif = https://github.com/yrelay/yrexpert-box.git
+      Dépôt yrexpert-box-testing alternatif = https://github.com/yrelay/yrexpert-box-testing.git
       Dépôt yrexpert-m alternatif = https://github.com/yrelay/yrexpert-m.git
       Dépôt yrexpert-js alternatif = https://github.com/yrelay/yrexpert-js.git
       Dépôt de la partition utilisateur = https://github.com/yrelay/yrexpert-dmo.git
@@ -117,7 +117,7 @@ done
 # Paramètres par défaut pour les options
 if [[ -z $cheminDepot ]]; then
     cheminDepot="https://github.com/yrelay/"
-    cheminDepotBox="https://github.com/yrelay/yrexpert-box.git"
+    cheminDepotBox="https://github.com/yrelay/yrexpert-box-testing.git"
     cheminDepotM="https://github.com/yrelay/yrexpert-m.git"
     cheminDepotJS="https://github.com/yrelay/yrexpert-js.git"
     cheminDepotPartUtil="https://github.com/yrelay/yrexpert-dmo.git"
@@ -222,15 +222,15 @@ if [ -d /vagrant ]; then
 
 else
     # TODO: à commenter
-    if [ -d /home/$utilisateurPrincipal/yrelay/yrexpert-box ]; then
-        repScript=/home/$utilisateurPrincipal/yrelay/yrexpert-box
+    if [ -d /home/$utilisateurPrincipal/yrelay/yrexpert-box-testing ]; then
+        repScript=/home/$utilisateurPrincipal/yrelay/yrexpert-box-testing
     else
-        if [ -d /usr/local/src/yrexpert-box ]; then
-            rm -rf /usr/local/src/yrexpert-box
+        if [ -d /usr/local/src/yrexpert-box-testing ]; then
+            rm -rf /usr/local/src/yrexpert-box-testing
         fi
         cd /usr/local/src
-        git clone -q $cheminDepotBox yrexpert-box
-        repScript=/usr/local/src/yrexpert-box
+        git clone -q $cheminDepotBox yrexpert-box-testing
+        repScript=/usr/local/src/yrexpert-box-testing
     fi
 fi
 
