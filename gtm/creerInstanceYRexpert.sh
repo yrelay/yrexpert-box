@@ -168,7 +168,8 @@ echo "export gtm_arch=$gtm_arch"                >> $basedir/config/env
 echo "export gtmver=$gtmver"                    >> $basedir/config/env
 echo "export instance=$instance"                >> $basedir/config/env
 
-echo "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env
+# echo "export gtm_icu_version=`icu-config --version`"		>> $basedir/config/env // n'existe pas Debian Buster
+echo "export gtm_icu_version=`uconv --version | cut -d' ' -f5`"	>> $basedir/config/env
 echo "export gtm_chset=UTF-8"			>> $basedir/config/env
 #echo "export LC_CTYPE=fr_FR.utf8"		>> $basedir/config/env
 
