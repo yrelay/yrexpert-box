@@ -6,7 +6,7 @@
 #!                                                                            !
 #!----------------------------------------------------------------------------!
 
-# script init pour yrexpert-JS
+# script init pour yrexpert-js
 
 # Debian
 ### BEGIN INIT INFO
@@ -15,8 +15,8 @@
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Lancer yrexpert-JS pour yrexpert au moment du démarrage
-# Description:       Services Starts/Stops yrexpert-JS pour yrexpert.
+# Short-Description: Lancer yrexpert-js pour yrexpert au moment du démarrage
+# Description:       Services Starts/Stops yrexpert-js pour yrexpert.
 ### END INIT INFO
 
 # Assurez-vous que nous sommes en root
