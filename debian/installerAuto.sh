@@ -41,7 +41,7 @@ usage()
     Ce script permet de créer automatiquement une instance YRexpert pour GT.M sur Debian
 
     DEFAULTS:
-      Dépôt yrexpert-box-testing alternatif = https://github.com/yrelay/yrexpert-box-testing.git
+      Dépôt yrexpert-box alternatif = https://github.com/yrelay/yrexpert-box.git
       Dépôt yrexpert-m alternatif = https://github.com/yrelay/yrexpert-m.git
       Dépôt yrexpert-js alternatif = https://github.com/yrelay/yrexpert-js.git
       Dépôt de la partition utilisateur = https://github.com/yrelay/yrexpert-dmo.git
@@ -117,7 +117,7 @@ done
 # Paramètres par défaut pour les options
 if [[ -z $cheminDepot ]]; then
     cheminDepot="https://github.com/yrelay/"
-    cheminDepotBox="https://github.com/yrelay/yrexpert-box-testing.git"
+    cheminDepotBox="https://github.com/yrelay/yrexpert-box.git"
     cheminDepotM="https://github.com/yrelay/yrexpert-m.git"
     cheminDepotJS="https://github.com/yrelay/yrexpert-js.git"
     cheminDepotPartUtil="https://github.com/yrelay/yrexpert-dmo.git"
@@ -189,11 +189,13 @@ echo "Ré-installation : $reInstall"
 echo "Passer les tests : $passerLesTests"
 echo "!--------------------------------------------------------------------------!"
 
-# Obtenir le nom de l'utilisateur principal si vous utilisez sudo, default si $username n'est pas sudo
+# Obtenir le nom de l'utilisateur principal si vous utilisez sudo, default si $username n'est pas sudo ou root si $(id -u)=0
 if [[ -n "$SUDO_USER" ]]; then
     utilisateurPrincipal=$SUDO_USER
 elif [[ -n "$USERNAME" ]]; then
     utilisateurPrincipal=$USERNAME
+elif [[ $EUID == 0 ]]; then
+    utilisateurPrincipal="root"
 else
     echo "Nom d'utilisateur non trouvé ou approprié à ajouter au groupe $instance"
     exit 1
@@ -222,15 +224,15 @@ if [ -d /vagrant ]; then
 
 else
     # TODO: à commenter
-    if [ -d /home/$utilisateurPrincipal/yrelay/yrexpert-box-testing ]; then
-        repScript=/home/$utilisateurPrincipal/yrelay/yrexpert-box-testing
+    if [ -d /home/$utilisateurPrincipal/yrelay/yrexpert-box ]; then
+        repScript=/home/$utilisateurPrincipal/yrelay/yrexpert-box
     else
-        if [ -d /usr/local/src/yrexpert-box-testing ]; then
-            rm -rf /usr/local/src/yrexpert-box-testing
+        if [ -d /usr/local/src/yrexpert-box ]; then
+            rm -rf /usr/local/src/yrexpert-box
         fi
         cd /usr/local/src
-        git clone -q $cheminDepotBox yrexpert-box-testing
-        repScript=/usr/local/src/yrexpert-box-testing
+        git clone -q $cheminDepotBox yrexpert-box
+        repScript=/usr/local/src/yrexpert-box
     fi
 fi
 
@@ -242,7 +244,7 @@ cd $repScript
 export debian=true;
 
 # Installer GTM
-cd gtm
+cd ./gtm
 ./installerGTM.sh
 
 # Créer une instance YRexpert
