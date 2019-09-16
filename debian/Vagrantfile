@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
 
   # Chaque environnement virtuel Vagrant nécessite une box.
   # source : https://app.vagrantup.com/debian
-  config.vm.box      = "debian/jessie64"
+  config.vm.box      = "debian/buster64"
   config.vm.hostname = "yrexpert-box"
   # Chaque environnement virtuel Vagrant nécessite une box.
   #config.vm.box = "Official Ubuntu 12.04 current daily Cloud Image amd64"
@@ -31,17 +31,15 @@ Vagrant.configure("2") do |config|
   # Dans l'exemple ci-dessous, ceux accédant à "localhost: 8080" accéderont
   # au port 80 sur la machine hôte.config.vm.network :
   # forwarded_port, guest: 8080, host: 80 # Exemple
-  ##config.vm.network :forwarded_port, guest: 3000, host: 3000 # Libre pour test
-  ##config.vm.network :forwarded_port, guest: 8000, host: 8000 # EWDRest
-  config.vm.network :forwarded_port, guest: 50080, host: 8080 # yrexpert-js
-  config.vm.network :forwarded_port, guest: 50081, host: 8081 # yrexpert-term
-  config.vm.network :forwarded_port, guest: 50082, host: 8082 # yrexpert-rpc
-  config.vm.network :forwarded_port, guest: 50083, host: 8083 # Libre pour test
-  ##config.vm.network :forwarded_port, guest: 8089, host: 8089 # Node Inspector
+  config.vm.network :forwarded_port, guest: 22, host: 50022 # Accès SSH
+  config.vm.network :forwarded_port, guest: 8080, host: 50080 # yrexpert-js
+  config.vm.network :forwarded_port, guest: 8081, host: 50081 # yrexpert-term
+  config.vm.network :forwarded_port, guest: 8082, host: 50082 # yrexpert-rpc
+  config.vm.network :forwarded_port, guest: 8083, host: 50083 # Libre pour test
 
   # Créer un réseau privé, qui permet l'accès de l'hôte uniquement à la machine
   # en utilisant une adresse IP spécifique.
-  # config.vm.network :private_network, ip: "192.168.0.22"
+  config.vm.network :private_network, ip: "192.168.50.1"
 
   # Créer un réseau public, qui généralement adaptée au pont réseau.
   # Les ponts réseaux rendent la machine apparante comme un autre périphérique
