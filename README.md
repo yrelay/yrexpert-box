@@ -82,6 +82,7 @@ Pour installer le plugin procéder comme suit :
 
 	~$ cd ~
 	~$ vagrant plugin install vagrant-vbguest
+	~$ vagrant vbguest
 
 Vous pouvez voir une erreur durant l'install **"Could not find the X.Org or XFree86 Window System, skipping."**. Cette erreur ne posera pas de problèmes. Cela vient du fait que la VM créée ne contient pas d'interface graphique.
 
