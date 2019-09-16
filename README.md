@@ -120,7 +120,7 @@ Sur certaine machine vous devrez activer le support vt-x/amd-v dans le BIOS, san
 La VM met en place protocole SSH, et ouvre les ports suivants sur VirtualBox.
 
 * 22 - SSH pour le cloud ou en local
-* 2222 - SSH pour la VirtualBox
+* 50022 - SSH pour la VirtualBox
 
 Remarque : Si vous utilisez un fournisseur de cloud (AWS/EC2, Rackspace) vous devrez ouvrir le pare-feu du cloud pour les ports suivants avant de commencer le processus.
 
@@ -128,7 +128,7 @@ Les codes d'Accès/Vérification sont les mêmes utilisés dans les tests automa
 
 Remarque : Si vous utilisez un fournisseur de cloud (Rackspace, AWS) le moyen le plus facile de connaitre l'adresse IP est de rechercher votre adresse DNS dans le portail de gestion de votre fournisseur de cloud.
 
-Vous pouvez également accéder à la machine virtuelle en utilisant un autre programme SSH (par exemple : PuTTY), il suffit d'indiquer l'adresse comme décrit dans la note ci-dessus et utiliser le port correct 22 pour les installations de cloud et 2222 pour une installation VirtualBox locale.
+Vous pouvez également accéder à la machine virtuelle en utilisant un autre programme SSH (par exemple : PuTTY), il suffit d'indiquer l'adresse comme décrit dans la note ci-dessus et utiliser le port correct 22 pour les installations de cloud et 50022 pour une installation VirtualBox locale.
 
 ## 9. Comptes utilisateur yrexpert
 
@@ -162,7 +162,7 @@ La ${instance}util désigne l'accès des utilisateurs d'yrexpert en mode termina
 
 Pour vous connecter en tant qu'utilisateur utilisant l'instance d'Yrelay par défaut:
 
-	~$ ssh -p 2222 yrelayutil@localhost # sur VM
+	~$ ssh -p 50022 yrelayutil@localhost # sur VM
 
 ou bien,
 
@@ -177,7 +177,7 @@ Ceci est équivalent à la ligne de commande **mumps -dir**.
 
 Pour vous connecter en tant que programmeur à l'instance d'Yrelay par défaut :
 
-	~$ ssh -p 2222 yrelayprog@localhost # sur VM
+	~$ ssh -p 50022 yrelayprog@localhost # sur VM
 
 ou bien,
 
@@ -185,7 +185,7 @@ ou bien,
 
 Ensuite, tapez le mot de passe.
 
-Remarque : Chaque fois qu'une nouvelle VM vagrant est créée une nouvelle clé de la machine de SSH est générée, qui a une nouvelle empreinte digitale. Certains clients SSH vont se plaindre à ce sujet et vous empêcheront de vous connecter. Il y a généralement des instructions dans le message d'erreur pour résoudre ce problème de connexion. Par exemple pour Debian : `ssh-keygen -f "/home/user/.ssh/known_hosts" -R [127.0.0.1]:2222`
+Remarque : Chaque fois qu'une nouvelle VM vagrant est créée une nouvelle clé de la machine de SSH est générée, qui a une nouvelle empreinte digitale. Certains clients SSH vont se plaindre à ce sujet et vous empêcheront de vous connecter. Il y a généralement des instructions dans le message d'erreur pour résoudre ce problème de connexion. Par exemple pour Debian : `ssh-keygen -f "/home/user/.ssh/known_hosts" -R [127.0.0.1]:50022`
 
 Pour vous connecter en tant qu'utilisateur Linux (avec privilèges sudo) :
 
@@ -222,9 +222,9 @@ Mot de passe :
 
 Ports :
 
-* yrexpert-js   : 8080 (https)
-* yrexpert-term : 8081 (https)
-* yrexpert-rpc  : 8082 (https)
+* yrexpert-js   : 50080 (http)
+* yrexpert-term : 50081 (http)
+* yrexpert-rpc  : 50082 (http)
 
 Services :
 
@@ -248,7 +248,7 @@ Les fichiers log pour ${instance}yrexpert et ${instance}yrexpert-js sont localis
 * yrexpertrpcOut.log
 * yrexpertrpcErr.log
 
-Pour accéder à l'administration du serveur EWD.js tapez dans l'URL de votre navigateur le lien suivant : **http://localhost:8080/yrexpert/index.html**
+Pour accéder à l'administration du serveur EWD.js tapez dans l'URL de votre navigateur le lien suivant : **http://localhost:50080/yrexpert/index.html**
 
 ## 13. Détails techniques
 
