@@ -50,7 +50,8 @@ Vagrant.configure("2") do |config|
   # est le chemin sur l'hôte pour le dossier réel. Le deuxième argument est
   # le chemin sur la VM pour monter le dossier. Et la troisième option
   # l'argument est un ensemble d'options non-nécessaires.
-  ### config.vm.synced_folder "../", "/vagrant", type: "virtualbox"
+  # config.vm.synced_folder "../", "/vagrant", type: "virtualbox"
+  config.vm.synced_folder "../", "/vagrant"
 
   # Définir le nom de la box primaire pour tous les VM,
   # plusieurs de machines virtuelles peuvent être ajoutées ici pour construire
