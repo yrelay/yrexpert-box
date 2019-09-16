@@ -214,7 +214,7 @@ apt-get update -qq > /dev/null
 apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon > /dev/null
 
 # Voir si le dossier vagrant existe si oui l'utiliser. si non cloner le dépôt
-if [ -n "`ls -A /vagrant`" ]; then
+if [ -d /vagrant ]; then
     repScript=/vagrant
 
     # Convertir les fins de lignes
