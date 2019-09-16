@@ -86,6 +86,8 @@ Pour installer le plugin procéder comme suit :
 
 Vous pouvez voir une erreur durant l'install **"Could not find the X.Org or XFree86 Window System, skipping."**. Cette erreur ne posera pas de problèmes. Cela vient du fait que la VM créée ne contient pas d'interface graphique.
 
+Pour plus de détails  : https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-failed-with-the-error-no-such-device/32436310
+
 ## 7. Démarrer le process
 
 Maintenant, puisque nous avons un clone du référentiel **yrexpert-box**, nous devons créer une nouvelle machine virtuelle utilisant Vagrant. Ce processus est automatisé et devrait prendre entre 15 minutes à 1 heure 30 minutes en fonction de ligne internet et des mises à jour nécessaires.
