@@ -1,5 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+# encoding: UTF-8
 
 Vagrant.configure("2") do |config|
 
@@ -44,7 +45,7 @@ Vagrant.configure("2") do |config|
   # Créer un réseau public, qui généralement adaptée au pont réseau.
   # Les ponts réseaux rendent la machine apparante comme un autre périphérique
   # physique sur votre réseau.
-  config.vm.network :"public_network", ip: "192.168.50.1"
+  config.vm.network :"public_network", ip: "192.168.50.1", bridge: "br0"
 
   # Partager un dossier supplémentaire à l'invite de la VM. Le premier argument
   # est le chemin sur l'hôte pour le dossier réel. Le deuxième argument est

@@ -6,7 +6,7 @@ Cette arborescence fournit les outils que vous aurez besoin pour créer une VM V
 
 Disclaimer : yrexpert est encore en développement et son interface peut changer dans les futures versions. Utilisez la production à vos propres risques.
 
-Remarque : Si vous êtes sur un système Linux type Debian, et que vous souhaitez installer **yrexpert** en local, allez au paragraphe [15. Installer yrexpert en local](https://github.com/yrelay/yrexpert-box#15-installer-yrexpert-en-local).
+Remarque : Si vous êtes sur un système Linux type Debian, et que vous souhaitez installer **yrexpert** en local, allez au paragraphe [16. Installer yrexpert en local](https://github.com/yrelay/yrexpert-box#15-installer-yrexpert-en-local).
 
 ## 1. Qu'est-ce que Vagrant
 
@@ -82,13 +82,26 @@ Pour installer le plugin procéder comme suit :
 
 	~$ cd ~
 	~$ vagrant plugin install vagrant-vbguest
-	~$ vagrant vbguest
 
 Vous pouvez voir une erreur durant l'install **"Could not find the X.Org or XFree86 Window System, skipping."**. Cette erreur ne posera pas de problèmes. Cela vient du fait que la VM créée ne contient pas d'interface graphique.
 
-Pour plus de détails  : https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-failed-with-the-error-no-such-device/32436310
+## 7. Créer un réseau Vagrant (sauf si déjà créé)
 
-## 7. Démarrer le process
+Créer un pont br0 :
+````shell
+$ sudo apt-get update
+$ sudo apt-get install -y bridge-utils
+$ sudo brctl addbr br0
+````
+
+Confirmer qu'il a été créé en répertoriant vos réseaux :
+````shell
+$ ip addr show
+````
+
+Vous devriez voir *br0* inclus dans la liste en tant que réseau *bridged*.
+
+## 8. Démarrer le process
 
 Maintenant, puisque nous avons un clone du référentiel **yrexpert-box**, nous devons créer une nouvelle machine virtuelle utilisant Vagrant. Ce processus est automatisé et devrait prendre entre 15 minutes à 1 heure 30 minutes en fonction de ligne internet et des mises à jour nécessaires.
 
@@ -115,12 +128,12 @@ Sur certaine machine vous devrez activer le support vt-x/amd-v dans le BIOS, san
 
 ![README003.png](./images/README001.png)
 
-## 8. Accès yrexpert-box
+## 9. Accès yrexpert-box
 
 La VM met en place protocole SSH, et ouvre les ports suivants sur VirtualBox.
 
 * 22 - SSH pour le cloud ou en local
-* 50022 - SSH pour la VirtualBox
+* 2222 - SSH pour la VirtualBox
 
 Remarque : Si vous utilisez un fournisseur de cloud (AWS/EC2, Rackspace) vous devrez ouvrir le pare-feu du cloud pour les ports suivants avant de commencer le processus.
 
@@ -128,9 +141,9 @@ Les codes d'Accès/Vérification sont les mêmes utilisés dans les tests automa
 
 Remarque : Si vous utilisez un fournisseur de cloud (Rackspace, AWS) le moyen le plus facile de connaitre l'adresse IP est de rechercher votre adresse DNS dans le portail de gestion de votre fournisseur de cloud.
 
-Vous pouvez également accéder à la machine virtuelle en utilisant un autre programme SSH (par exemple : PuTTY), il suffit d'indiquer l'adresse comme décrit dans la note ci-dessus et utiliser le port correct 22 pour les installations de cloud et 50022 pour une installation VirtualBox locale.
+Vous pouvez également accéder à la machine virtuelle en utilisant un autre programme SSH (par exemple : PuTTY), il suffit d'indiquer l'adresse comme décrit dans la note ci-dessus et utiliser le port correct 22 pour les installations de cloud et 2222 pour une installation VirtualBox locale.
 
-## 9. Comptes utilisateur yrexpert
+## 10. Comptes utilisateur yrexpert
 
 Administrateur Système :
 
@@ -142,7 +155,7 @@ Partition DMO :
 * Accès : DMO
 * Vérification : DMO
 
-## 10. Accès en mode terminal
+## 11. Accès en mode terminal
 
 Il y a deux comptes utilisateurs qui sont créés automatiquement lors du processus d'installation qui rendent l'accès à **yrexpert** plus facile :
 
@@ -162,7 +175,7 @@ La ${instance}util désigne l'accès des utilisateurs d'yrexpert en mode termina
 
 Pour vous connecter en tant qu'utilisateur utilisant l'instance d'Yrelay par défaut:
 
-	~$ ssh -p 50022 yrelayutil@localhost # sur VM
+	~$ ssh -p 2222 yrelayutil@localhost # sur VM
 
 ou bien,
 
@@ -177,7 +190,7 @@ Ceci est équivalent à la ligne de commande **mumps -dir**.
 
 Pour vous connecter en tant que programmeur à l'instance d'Yrelay par défaut :
 
-	~$ ssh -p 50022 yrelayprog@localhost # sur VM
+	~$ ssh -p 2222 yrelayprog@localhost # sur VM
 
 ou bien,
 
@@ -185,7 +198,7 @@ ou bien,
 
 Ensuite, tapez le mot de passe.
 
-Remarque : Chaque fois qu'une nouvelle VM vagrant est créée une nouvelle clé de la machine de SSH est générée, qui a une nouvelle empreinte digitale. Certains clients SSH vont se plaindre à ce sujet et vous empêcheront de vous connecter. Il y a généralement des instructions dans le message d'erreur pour résoudre ce problème de connexion. Par exemple pour Debian : `ssh-keygen -f "/home/user/.ssh/known_hosts" -R [127.0.0.1]:50022`
+Remarque : Chaque fois qu'une nouvelle VM vagrant est créée une nouvelle clé de la machine de SSH est générée, qui a une nouvelle empreinte digitale. Certains clients SSH vont se plaindre à ce sujet et vous empêcheront de vous connecter. Il y a généralement des instructions dans le message d'erreur pour résoudre ce problème de connexion. Par exemple pour Debian : `ssh-keygen -f "/home/user/.ssh/known_hosts" -R [127.0.0.1]:2222`
 
 Pour vous connecter en tant qu'utilisateur Linux (avec privilèges sudo) :
 
@@ -204,7 +217,7 @@ Remarque : Le prompt **YXP>** indique que vous êtes sur la partition programme 
 
 Pour accéder aux fichiers en utilisant SFTP vous devez vous connecter en tant qu'utilisateur **vagrant** ou le compte pré-créé si vous utilisez un fournisseur de cloud (EC2/Rackspace).
 
-## 11. Fermer la VM Vagrant
+## 12. Fermer la VM Vagrant
 
 Vous pouvez arrêter l'instance **yrelay** en tapant **vagrant halt** ou **vagrant suspend** :
 
@@ -212,7 +225,7 @@ Vous pouvez arrêter l'instance **yrelay** en tapant **vagrant halt** ou **vagra
 
 * **vagrant suspend** la VM sera «en pause» - la mémoire et de l'état d'exécution sur le disque seront sauvegardés. Ceci est utile lorsque vous souhaitez sauvegarder l'état où vous êtes et pour y revenir rapidement plus tard. Pour continuer à utiliser la VM taper **vagrant resume**.
 
-## 12. Intégration de EWD.js 
+## 13. Intégration de EWD.js 
 
 Par défaut EWD.js est installé au cours du processus **vagrant up**. Une traduction française de la documentation et des liens sont disponibles sur le dépôt [yrexpert-Documents](https://github.com/yrelay/yrexpert-Documents/raw/master/Ewd/EWD3_fr.pdf). Les paramètres de configuration importants sont ci-dessous :
 
@@ -222,9 +235,9 @@ Mot de passe :
 
 Ports :
 
-* yrexpert-js   : 50080 (http)
-* yrexpert-term : 50081 (http)
-* yrexpert-rpc  : 50082 (http)
+* yrexpert-js   : 8080 (https)
+* yrexpert-term : 8081 (https)
+* yrexpert-rpc  : 8082 (https)
 
 Services :
 
@@ -248,30 +261,30 @@ Les fichiers log pour ${instance}yrexpert et ${instance}yrexpert-js sont localis
 * yrexpertrpcOut.log
 * yrexpertrpcErr.log
 
-Pour accéder à l'administration du serveur EWD.js tapez dans l'URL de votre navigateur le lien suivant : **http://localhost:50080/yrexpert/index.html**
+Pour accéder à l'administration du serveur EWD.js tapez dans l'URL de votre navigateur le lien suivant : **http://localhost:8080/yrexpert/index.html**
 
-## 13. Détails techniques
+## 14. Détails techniques
 
 L'essentiel se trouve dans deux fichiers :
 
 * [Vagrantfile](https://github.com/yrelay/yrexpert-box/tree/master/debian/Vagrantfile)
 * [installerAuto.sh](https://github.com/yrelay/yrexpert-box/tree/master/debian/installerAuto.sh)
 
-### 13.1. Vagrantfile
+### 14.1. Vagrantfile
 
 Le fichier Vagrantfile est ce qui indique à Vagrant quoi faire. Ce fichier contient la configuration pour la machine virtuelle de base qui sera créée, mais aussi où l'obtenir par exemple **debian/stretch64**. Le Vagrantfile contient également des informations sur l'outil de gestion (shell, chef, puppet, etc.) à utiliser, dans quel ordre, et où les fichiers sont. Actuellement, seul l'outil shell est utilisé.
 
 Pour plus d'informations sur Vagrantfiles lire la documentation Vagrant situé à **http://docs.vagrantup.com/v2/vagrantfile/index.html**.
 
-### 13.2. installerAuto.sh
+### 14.2. installerAuto.sh
 
 Ceci est le script qui est utilisé par le shell. Ce script installe automatiquement yrexpert sur une machine. Ceci est un installateur non-interactive (automatisé) qui assurera si les prérequis sont remplies (CMake, git, etc.), l'installation de GT.M, créer une instance d'yrexpert, exécute les scripts qui vont importer toutes les routines et globales d'yrexpert pour l'instance yrelay et exécute une série de tests. Durant l'installation une base de donnée de démonstration **DMO** sera installée. 
 
 **installerAuto.sh** exécute quelques commandes et lance dans un certain ordre des scripts se trouvant dans les répertoires.
 
-## 14. Quelques erreurs connues
+## 15. Quelques erreurs connues
 
-### 14.1. %GTM-E-REQRUNDOWN
+### 15.1. %GTM-E-REQRUNDOWN
 
 	%GTM-E-REQRUNDOWN, Error accessing database /home/yrelay/globals/temp.dat.  Must
 	 be rundown on cluster node srv10.,%GTM-I-TEXT, Error with database control sema
@@ -282,7 +295,7 @@ Pour corriger l'erreur, vous devez exécuter un programme Linux nommé mupip qui
 
 	~$ sudo su "yrelay" -c 'source /home/yrelay/config/env && $gtm_dist/mupip rundown -r "*"'
 
-### 14.2. Connection to localhost closed.
+### 15.2. Connection to localhost closed.
 
 	Si vous avez une erreur "Connection to localhost closed" à la connection - Votre partition : DMO. Vous devez exécuter un programme Linux nommé mupip qui fait partie de GT.M :
 
@@ -291,7 +304,7 @@ Pour corriger l'erreur, vous devez exécuter un programme Linux nommé mupip qui
 
 Nota : vous devrez dans certains cas redémarrer les services avant de faire la réparation.
 
-## 15. Installer yrexpert en local
+## 16. Installer yrexpert en local
 
 Si vous êtes sur un système Linux type Debian, et que vous souhaitez installer **yrexpert** en local, vous pouvez taper :
 
@@ -304,7 +317,7 @@ Si vous êtes sur un système Linux type Debian, et que vous souhaitez installer
 
 Pour utiliser **yrexpert**, retournez au paragraphe [12. Intégration de EWD.js](https://github.com/yrelay/yrexpert-box#12-int%C3%A9gration-de-ewdjs).
 
-## 16. Supprimer l'instance de yrexpert
+## 17. Supprimer l'instance de yrexpert
 
 ATTENTION : Toutes les données seront perdues !
 
@@ -320,7 +333,7 @@ Si vous êtes sur un système Linux type Debian, et que vous souhaitez supprimer
 
 Pour finir vous pouvez supprimer sans risque l'arboressance **~/yrelay**.
 
-## 17. Comment contribuer ?
+## 18. Comment contribuer ?
 
 * Dupliquer le dépôt (utiliser Fork)
 * Créer un nouvelle branche (git checkout -b ma-branche)
@@ -330,7 +343,7 @@ Pour finir vous pouvez supprimer sans risque l'arboressance **~/yrelay**.
 
 Pour remonter un bug : [https://github.com/yrelay/yrexpert-box/issues](https://github.com/yrelay/yrexpert-box/issues)
 
-## 18. Liens
+## 19. Liens
 
 * Yrelay Page d'accueil : https://www.yrelay.fr/
 * Yrelay Référentiels : https://code.yrelay.fr/
