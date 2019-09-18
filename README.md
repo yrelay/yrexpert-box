@@ -108,7 +108,7 @@ $ cd ~/yrelay/yrexpert-box/debian
 $ vagrant up
 ````
 
-Si votre interface n'est pas reconnue, Vagrant vous proposera la choisir :
+Si votre interface n'est pas reconnue, Vagrant vous proposera de la choisir :
 
 	==> Box YRexpert Debian: Available bridged network interfaces:
 	1) wlp3s0
